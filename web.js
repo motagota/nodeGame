@@ -1,11 +1,14 @@
 var app = require('http').createServer(handler);
-var express = require('express');
+
 var fs = require('fs');
 var io = require('socket.io').listen(app);
 
+app.listen(5000);
+
+
 // websockets not supported yet
 io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
+ io.set("transports", ["xhr-polling"]); 
   io.set("polling duration", 10); 
 });
 
@@ -21,14 +24,6 @@ function handler (req, res) {
     res.end(data);
   });
 }
-
-var port = process.env.PORT || 5000;
-app.listen(port, function() {
-  console.log("Listening on " + port);
-});
-
-
-
 
 
 // usernames which are currently connected to the chat
