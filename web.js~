@@ -1,6 +1,7 @@
+var app = require('http').createServer(express.logger());
 var express = require('express');
+var fs = require('fs');
 
-var app = express.createServer(express.logger());
 
 app.get('/', function(request, response) {
   fs.readFile(__dirname + '/index.html',

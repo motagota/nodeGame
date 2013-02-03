@@ -1,9 +1,9 @@
+var app = require('http').createServer(handler);
 var express = require('express');
 var fs = require('fs');
 
-var app = express.createServer(express.logger());
 
-app.get('/', function(request, response) {
+function handler (req, res) {
   fs.readFile(__dirname + '/index.html',
   function (err, data) {
     if (err) {
@@ -14,7 +14,7 @@ app.get('/', function(request, response) {
     res.writeHead(200);
     res.end(data);
   });
-});
+}
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
