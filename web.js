@@ -3,7 +3,8 @@ var app = require('http').createServer(handler);
 var fs = require('fs');
 var io = require('socket.io').listen(app);
 
-app.listen(5000);
+var port = process.env.PORT || 5000;
+	app.listen(port);
 
 
 // websockets not supported yet
