@@ -7,6 +7,9 @@ var port = process.env.PORT || 5000;
 	app.listen(port);
 
 
+//var world = require("./world.js");
+
+
 // websockets not supported yet
 io.configure(function () { 
  io.set("transports", ["xhr-polling"]); 
@@ -27,10 +30,17 @@ function handler (req, res) {
 }
 
 
+setInterval(sendTime, 1000);
+function sendTime(){
+io.sockets.emit('updateTime', new Date());
+console.log("sending time");
+}
+
 // usernames which are currently connected to the chat
 var usernames = {};
 
 io.sockets.on('connection', function (socket) {
+
    // when the client emits 'sendchat', this listens and executes
    socket.on('sendchat', function (data) {
 
