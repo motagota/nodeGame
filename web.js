@@ -30,16 +30,63 @@ function handler (req, res) {
 }
 
 
+function Forest(){
+   this.maxTrees = 1000;
+   this.growthRate = 1;
+   this.trees =0;
+   this.updateForest = updateForest;
+   this.setLevel =setLevel;
+   this.level =1;
+   this.wood =0;
+   this.deathRate=0.001;
+   this.maxWood=500;
+   
+   function setLevel(level){
+       this.level =level;
+       this.growthRate *=level;
+       this.maxTrees *= level;
+       
+       this.maxWood *=level;
+   }
+
+   function updateForest(dt){
+      this.trees +=  (this.growthRate *dt);
+
+      if(this.trees > this.maxTrees) this.trees = this.maxTrees;
+
+      this.wood += this.trees * (this.deathRate* dt);
+      this.trees -= this.deathRate*dt;
+
+      if(this.wood > this.maxWood) this.wood = this.maxWood;
+      if(this.trees<0) this.trees=0;
+   }  
+}
+
+var f1 = {};
+for(i=0; i<10;i++){  f1[i] = new Forest(); f1[i].setLevel(i);}
+var dt=new Date().getTime();
+var lastUpdate = dt;
+var count=0
 setInterval(sendTime, 1000);
 function sendTime(){
-io.sockets.emit('updateTime', new Date());
-console.log("sending time");
+   io.sockets.emit('updateTime', new Date());
+   dt = new Date().getTime()-lastUpdate;
+   lastUpdate = new Date().getTime();
+   for( i=0;i<10;i++) f1[i].updateForest(dt/1000);
+   count++;
+   count = count %10;
+   io.sockets.emit('updateForest', count, f1[count]);
+   
 }
 
 // usernames which are currently connected to the chat
 var usernames = {};
 
 io.sockets.on('connection', function (socket) {
+
+   socket.on('updateForest',function(index){
+io.sockets.emit('updateForest', index, f1[index]);
+});
 
    // when the client emits 'sendchat', this listens and executes
    socket.on('sendchat', function (data) {

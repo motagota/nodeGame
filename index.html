@@ -5,7 +5,7 @@
 <script>
 
 var socket = io.connect(window.location.hostname);
-
+var number =0;
 // on connection to server, ask for user's name with an anonymous callback
 socket.on('connect', function(){
    // call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -31,10 +31,22 @@ socket.on('updateusers', function(data) {
 
 });
 
+socket.on('updateForest',function(index, forest){
+	var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+	ctx.clearRect(0,0,c.width,c.height);
+	ctx.font="10px Arial";
+        ctx.strokeText("Level - " + forest.level,10,10);
+	ctx.strokeText("Trees - " + forest.trees ,10,25);
+        ctx.strokeText("Wood  - " + forest.wood ,10,40);
+});
+
 socket.on('updateTime', function (time) {
    $('#time').html('<b> Time :</b> ' + time.toString('dddd, MMMM ,yyyy')  + '<br>');
 
 });
+
+
 
 // on load of page
 
@@ -48,8 +60,11 @@ $('#datasend').click( function() {
   $('#data').val('');
 
   // tell server to execute 'sendchat' and send along one parameter
-  socket.emit('sendchat', message);
+//  socket.emit('sendchat', message);
+number += 1;
+number = number % 10;
 
+socket.emit('updateForest',number);
 });
 
 
@@ -70,12 +85,17 @@ $('#data').keypress(function(e) {
 
 </script>
 
-<div style="float:left;width:100px;border-right:1px solid green;height:50px;padding:10px;overflow:">
 
-<b>Time</b>
 
-<div id="time"></div>
 
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+
+
+
+<div style="float:;width:100px;border-right:1px solid green;height:50px;padding:10px;overflow:">
+   <div id="time"></div>
 </div>
 
 <div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
