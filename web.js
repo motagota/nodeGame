@@ -6,15 +6,15 @@ var port = process.env.PORT || 5000;
 app.listen(port);
 
 // websockets not supported yet
-io.configure(function () { 
- io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
+io.configure(function () {
+   io.set("transports", ["xhr-polling"]); 
+   io.set("polling duration", 10); 
 });
 
 function handler (req, res) {
   fs.readFile(__dirname + '/index.html',
   function (err, data) {
-    if (err) {
+     if (err) {
       res.writeHead(500);
       return res.end('Error loading index.html');
     }
@@ -120,19 +120,19 @@ var Field = function(){
 
 
 Field.prototype.speadTo = function(x,y){  
-  newX=((Math.floor(Math.random() * 3))-1)
-  newY=((Math.floor(Math.random() * 3))-1)
-  console.log("multiply " + i + " , " + j  );
+  var newX=((Math.floor(Math.random() * 3))-1);
+  var newY=((Math.floor(Math.random() * 3))-1);
+  console.log("multiply " + x + " , " + y  );
   
-   if(x+newX >= numCells) return;
+   if(x+newX >= this.numCells) return;
    if(x+newX <= 0) return;
    
-   if(y+newY >= numCells) return;
+   if(y+newY >= this.numCells) return;
    if(y+newY <= 0) return;
                                
    this.cells[x+newX][y+newY].gotGrass=true;
    this.cells[x+newX][y+newY].energy=35;
-}
+};
 /*
 function hop(x,y){
    var newX=(Math.floor(Math.random() * 4))-2;
@@ -164,37 +164,37 @@ function reproduce(x,y){
 
 */
 
-Field.prototype.init = function(_cells){   
-this.cells=_cells;
-this.cells[2][2].gotGrass =  true;
-this.cells[2][2].energy = 100;
-this.cells[2][9].gotGrass  = true;
-this.cells[2][9].energy = 100;
-this.cells[5][5].gotGrass  = true;
-this.cells[5][5].energy = 100;
-this.cells[6][5].gotGrass  = true;
-this.cells[6][5].energy = 100;
-this.cells[5][4].gotGrass  = true;
-this.cells[5][4].energy = 100;
-this.cells[4][4].gotGrass  = true;
-this.cells[4][4].energy = 100;
+Field.prototype.init = function(_cells) {
+   this.cells=_cells;
+   this.cells[2][2].gotGrass =  true;
+   this.cells[2][2].energy = 100;
+   this.cells[2][9].gotGrass  = true;
+   this.cells[2][9].energy = 100;
+   this.cells[5][5].gotGrass  = true;
+   this.cells[5][5].energy = 100;
+   this.cells[6][5].gotGrass  = true;
+   this.cells[6][5].energy = 100;
+   this.cells[5][4].gotGrass  = true;
+   this.cells[5][4].energy = 100;
+   this.cells[4][4].gotGrass  = true;
+   this.cells[4][4].energy = 100;
 
-this.cells[9][2].gotGrass  = true;
-this.cells[9][2].energy = 100;
-this.cells[9][9].gotGrass  = true;
-this.cells[9][9].energy = 100;
+   this.cells[9][2].gotGrass  = true;
+   this.cells[9][2].energy = 100;
+   this.cells[9][9].gotGrass  = true;
+   this.cells[9][9].energy = 100;
 
-this.cells[5][5].gotRabbit = true;
-this.cells[2][2].gotRabbit = true;
-this.cells[9][9].gotRabbit = true;
-this.cells[5][5].gotRabbit = true;
-}
+   this.cells[5][5].gotRabbit = true;
+   this.cells[2][2].gotRabbit = true;
+   this.cells[9][9].gotRabbit = true;
+   this.cells[5][5].gotRabbit = true;
+};
 
 
 
 Field.prototype.update = function(){    
-   for (i=0;i<this.numCells;i++){
-      for(j=0;j<this.numCells;j++){
+   for (var i=0;i<this.numCells;i++){
+      for(var j=0;j<this.numCells;j++){
          this.cells[i][j].update();
          if(this.cells[i][j].spreadtTo){ 
             console.log("tye spread");
@@ -205,31 +205,30 @@ Field.prototype.update = function(){
    }
 };
 
-this.cells={};
-numCells=10;
+var cells={};
+var numCells=10;
 
-for (i=0;i<numCells;i++){
-       cellsRow = {};
-       for (j=0;j<numCells;j++){
+for (var i=0;i<numCells;i++){
+       var cellsRow = {};
+       for (var j=0;j<numCells;j++){
          cellsRow[j] = new cell(i,j);
        }
-   this.cells[i]= cellsRow;
+   cells[i]= cellsRow;
 }
 
 var fields =  new Field();
-fields.init(this.cells);
+fields.init(cells);
 setInterval(function(){ fields.update(); }, 100 );	
 
 var dt=new Date().getTime();
 var lastUpdate = dt;
-var count=0
+
 setInterval(sendTime, 1000);
 function sendTime(){
    io.sockets.emit('updateTime', new Date());
    dt = new Date().getTime()-lastUpdate;
    lastUpdate = new Date().getTime();
-  
-   
+    
    io.sockets.emit('refresh',1);
    io.sockets.emit('cells',fields.cells);
    
@@ -239,12 +238,11 @@ function sendTime(){
 var usernames = {};
 
 io.sockets.on('connection', function (socket) {
-
-
    // when the client emits 'adduser', this listens and executes
-socket.on('adduser', function(username){
+   
+   socket.on('adduser', function(username){
+   
    // we store the username in the socket session for this client
-
    socket.username = username;
 
    // add the client's username to the global list
