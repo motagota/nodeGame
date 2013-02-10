@@ -1,0 +1,158 @@
+<script src="/socket.io/socket.io.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+<script>
+
+var socket = io.connect(window.location.hostname);
+var number =0;
+// on connection to server, ask for user's name with an anonymous callback
+socket.on('connect', function(){
+   // call the server-side function 'adduser' and send one parameter (value of prompt)
+   socket.emit('adduser', prompt("What's your name?"));
+});
+
+// listener, whenever the server emits 'updatechat', this updates the chat body
+socket.on('updatechat', function (username, data) {
+   $('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+
+});
+
+
+// listener, whenever the server emits 'updateusers', this updates the username list
+
+socket.on('updateusers', function(data) {
+
+   $('#users').empty();
+   $.each(data, function(key, value) {
+   $('#users').append('<div>' + key + '</div>');
+
+  });
+
+});
+
+
+socket.on('updateTime', function (time) {
+   $('#time').html('<b> Time :</b> ' + time.toString('dddd, MMMM ,yyyy')  + '<br>');
+
+});
+
+
+socket.on('refresh',function(number){
+var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+	ctx.clearRect(0,0,c.width,c.height);
+    ctx.fillStyle ="blue";
+        ctx.fillRect(220,20,19,19);
+
+});
+
+socket.on('cells',function(cells){
+var count=10;
+var numCells=10;
+var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+         
+for(i=0;i<numCells;i++){
+for(j=0;j<numCells;j++){
+        ctx.fillStyle = "white";
+       if (cells[i][j].gotGrass) ctx.fillStyle ="green";
+      if(cells[i][j].gotRabbit)  {
+       //         count += 40;
+               ctx.fillStyle = "red";
+           //     	ctx.font="15px Arial";
+             //           ctx.strokeText("rabbit - " + cells[i][j].rabbitEnergy,210, 10+count);
+	       //         ctx.strokeText("energy - " + cells[i][j].energy ,210, 30+count);
+                        //ctx.strokeText("Wood  - " + forest.wood ,10,40);
+ 
+               }
+        
+        ctx.fillRect((i*20),(j*20),19,19);
+}
+};
+
+});
+
+
+
+
+socket.on('updateForest',function(index, forest){
+	var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+
+	//ctx.font="10px Arial";
+        //ctx.strokeText("Level - " + forest.level,10,10);
+	//ctx.strokeText("Trees - " + forest.trees ,10,25);
+        //ctx.strokeText("Wood  - " + forest.wood ,10,40);
+
+        ctx.fillStyle ="red";
+        ctx.fillRect((index*20)+50,60,19,19);
+
+});
+
+
+
+// on load of page
+
+$(function(){
+
+// when the client clicks SEND
+
+$('#datasend').click( function() {
+
+   var message = $('#data').val();
+  $('#data').val('');
+
+  // tell server to execute 'sendchat' and send along one parameter
+//  socket.emit('sendchat', message);
+
+});
+
+
+
+// when the client hits ENTER on their keyboard
+
+$('#data').keypress(function(e) {
+
+   if(e.which == 13) {
+      $(this).blur();
+     $('#datasend').focus().click();
+   }
+});
+
+});
+
+
+
+</script>
+
+
+
+
+<canvas id="myCanvas" width="400" height="400" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+
+
+
+<div style="float:;width:100px;border-right:1px solid green;height:50px;padding:10px;overflow:">
+   <div id="time"></div>
+</div>
+
+<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+
+<b>USERS</b>
+
+<div id="users"></div>
+
+</div>
+
+<div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
+
+<div id="conversation"></div>
+
+<input id="data" style="width:200px;" />
+
+<input type="button" id="datasend" value="send" />
+
+</div>
