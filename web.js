@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 var app = require('http').createServer(handler);
 var fs = require('fs');
@@ -9,12 +10,34 @@ app.listen(port);
 io.configure(function () {
    io.set("transports", ["xhr-polling"]); 
    io.set("polling duration", 10); 
+=======
+var app = require('http').createServer(handler);
+
+var fs = require('fs');
+var io = require('socket.io').listen(app);
+
+var port = process.env.PORT || 5000;
+	app.listen(port);
+
+
+//var world = require("./world.js");
+
+
+// websockets not supported yet
+io.configure(function () { 
+ io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
 });
 
 function handler (req, res) {
   fs.readFile(__dirname + '/index.html',
   function (err, data) {
+<<<<<<< HEAD
      if (err) {
+=======
+    if (err) {
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
       res.writeHead(500);
       return res.end('Error loading index.html');
     }
@@ -24,6 +47,7 @@ function handler (req, res) {
   });
 }
 
+<<<<<<< HEAD
 function cell(_x,_y){ 
   this.x=_x;
   this.y=_y;
@@ -82,6 +106,10 @@ function cell(_x,_y){
 }
 
 var Forest = function(){
+=======
+
+function Forest(){
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
    this.maxTrees = 1000;
    this.growthRate = 1;
    this.trees =0;
@@ -113,6 +141,7 @@ var Forest = function(){
    }  
 }
 
+<<<<<<< HEAD
 var Field = function(){
    this.cells = {};
    this.numCells = 10;
@@ -223,14 +252,28 @@ setInterval(function(){ fields.update(); }, 100 );
 var dt=new Date().getTime();
 var lastUpdate = dt;
 
+=======
+var f1 = {};
+for(i=0; i<10;i++){  f1[i] = new Forest(); f1[i].setLevel(i);}
+var dt=new Date().getTime();
+var lastUpdate = dt;
+var count=0
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
 setInterval(sendTime, 1000);
 function sendTime(){
    io.sockets.emit('updateTime', new Date());
    dt = new Date().getTime()-lastUpdate;
    lastUpdate = new Date().getTime();
+<<<<<<< HEAD
     
    io.sockets.emit('refresh',1);
    io.sockets.emit('cells',fields.cells);
+=======
+   for( i=0;i<10;i++) f1[i].updateForest(dt/1000);
+   count++;
+   count = count %10;
+   io.sockets.emit('updateForest', count, f1[count]);
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
    
 }
 
@@ -238,11 +281,30 @@ function sendTime(){
 var usernames = {};
 
 io.sockets.on('connection', function (socket) {
+<<<<<<< HEAD
    // when the client emits 'adduser', this listens and executes
    
    socket.on('adduser', function(username){
    
    // we store the username in the socket session for this client
+=======
+
+   socket.on('updateForest',function(index){
+io.sockets.emit('updateForest', index, f1[index]);
+});
+
+   // when the client emits 'sendchat', this listens and executes
+   socket.on('sendchat', function (data) {
+
+   // we tell the client to execute 'updatechat' ith 2 parameters
+   io.sockets.emit('updatechat', socket.username, data);
+});
+
+   // when the client emits 'adduser', this listens and executes
+socket.on('adduser', function(username){
+   // we store the username in the socket session for this client
+
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
    socket.username = username;
 
    // add the client's username to the global list
@@ -266,12 +328,24 @@ io.sockets.on('connection', function (socket) {
 socket.on('disconnect', function(){
 
    // remove the username from global usernames list
+<<<<<<< HEAD
   delete usernames[socket.username];
 
    // update list of users in chat, client-side
    io.sockets.emit('updateusers', usernames);
 
    // echo globally that this client has left
+=======
+
+  delete usernames[socket.username];
+
+   // update list of users in chat, client-side
+
+   io.sockets.emit('updateusers', usernames);
+
+   // echo globally that this client has left
+
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
    socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
 
 });

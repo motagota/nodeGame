@@ -1,4 +1,5 @@
 <script src="/socket.io/socket.io.js"></script>
+<<<<<<< HEAD
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>
    var socket = io.connect(window.location.hostname);
@@ -17,6 +18,31 @@
 
    // listener, whenever the server emits 'updateusers', this updates the username list
    socket.on('updateusers', function(data) {
+=======
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+<script>
+
+var socket = io.connect(window.location.hostname);
+var number =0;
+// on connection to server, ask for user's name with an anonymous callback
+socket.on('connect', function(){
+   // call the server-side function 'adduser' and send one parameter (value of prompt)
+   socket.emit('adduser', prompt("What's your name?"));
+});
+
+// listener, whenever the server emits 'updatechat', this updates the chat body
+socket.on('updatechat', function (username, data) {
+   $('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+
+});
+
+
+// listener, whenever the server emits 'updateusers', this updates the username list
+
+socket.on('updateusers', function(data) {
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
 
    $('#users').empty();
    $.each(data, function(key, value) {
@@ -26,6 +52,7 @@
 
 });
 
+<<<<<<< HEAD
 
 socket.on('updateTime', function (time) {
    $('#time').html('<b> Time :</b> ' + time.toString('dddd, MMMM ,yyyy')  + '<br>');
@@ -91,6 +118,50 @@ $('#datasend').click( function() {
 
 // when the client hits ENTER on their keyboard
 $('#data').keypress(function(e) {
+=======
+socket.on('updateForest',function(index, forest){
+	var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+	ctx.clearRect(0,0,c.width,c.height);
+	ctx.font="10px Arial";
+        ctx.strokeText("Level - " + forest.level,10,10);
+	ctx.strokeText("Trees - " + forest.trees ,10,25);
+        ctx.strokeText("Wood  - " + forest.wood ,10,40);
+});
+
+socket.on('updateTime', function (time) {
+   $('#time').html('<b> Time :</b> ' + time.toString('dddd, MMMM ,yyyy')  + '<br>');
+
+});
+
+
+
+// on load of page
+
+$(function(){
+
+// when the client clicks SEND
+
+$('#datasend').click( function() {
+
+   var message = $('#data').val();
+  $('#data').val('');
+
+  // tell server to execute 'sendchat' and send along one parameter
+//  socket.emit('sendchat', message);
+number += 1;
+number = number % 10;
+
+socket.emit('updateForest',number);
+});
+
+
+
+// when the client hits ENTER on their keyboard
+
+$('#data').keypress(function(e) {
+
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
    if(e.which == 13) {
       $(this).blur();
      $('#datasend').focus().click();
@@ -100,16 +171,32 @@ $('#data').keypress(function(e) {
 });
 
 
+<<<<<<< HEAD
 </script>
 
 <canvas id="myCanvas" width="400" height="400" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
 
+=======
+
+</script>
+
+
+
+
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+
+
+
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
 <div style="float:;width:100px;border-right:1px solid green;height:50px;padding:10px;overflow:">
    <div id="time"></div>
 </div>
 
 <div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+<<<<<<< HEAD
    <b>USERS</b>
    <div id="users"></div>
 </div>
@@ -117,4 +204,21 @@ Your browser does not support the HTML5 canvas tag.</canvas>
    <div id="conversation"></div>
    <input id="data" style="width:200px;" />
    <input type="button" id="datasend" value="send" />
+=======
+
+<b>USERS</b>
+
+<div id="users"></div>
+
+</div>
+
+<div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
+
+<div id="conversation"></div>
+
+<input id="data" style="width:200px;" />
+
+<input type="button" id="datasend" value="send" />
+
+>>>>>>> 92673ac4748412291170feb19e54329eb6be317b
 </div>
