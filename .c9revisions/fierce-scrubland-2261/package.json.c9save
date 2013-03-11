@@ -2,3 +2,4 @@
 {"contributors":[],"silentsave":false,"ts":1360484317846,"patch":[[{"diffs":[[0,"\": \""],[-1,"node-example"],[1,"fierce-scrubland"],[0,"\",\n "]],"start1":9,"start2":9,"length1":20,"length2":24}]],"length":232,"saved":false}
 {"contributors":[],"silentsave":false,"ts":1360484800744,"patch":[[{"diffs":[[0,"3.x\""],[-1,",\n    \"socket.io\":\"0.9.X\""],[0,"\n  }"]],"start1":196,"start2":196,"length1":33,"length2":8}]],"length":207,"saved":false}
 {"contributors":[],"silentsave":false,"ts":1360489999864,"patch":[[{"diffs":[[0,"\": \"3.x\""],[1,",\n    \"socket.io\":\"0.9.X\""],[0,"\n  }\n}\n"]],"start1":192,"start2":192,"length1":15,"length2":40}]],"length":232,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1362954869343,"patch":[[{"diffs":[[0,":\"0.9.X\""],[1,",\n    \"nodefly\": \"stable\""],[0,"\n  }\n}\n"]],"start1":217,"start2":217,"length1":15,"length2":40}]],"length":257,"saved":false}
