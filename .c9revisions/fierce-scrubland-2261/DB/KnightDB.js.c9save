@@ -1,0 +1,2 @@
+{"ts":1370835465431,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1370835513320,"patch":[[{"diffs":[[1,"var mongoose = require('mongoose');\nvar Schema = mongoose.Schema;\n\n\nvar knightSchema = Schema({\n   name : String,\n  \n   });\n   \n mongoose.model('Knight',knightSchema);"]],"start1":0,"start2":0,"length1":0,"length2":167}]],"length":167,"saved":false}

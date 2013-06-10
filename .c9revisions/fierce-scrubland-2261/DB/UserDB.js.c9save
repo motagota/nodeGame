@@ -1,0 +1,3 @@
+{"ts":1370828277702,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1370828393317,"patch":[[{"diffs":[[1,"var mongoose = require('mongoose');\nvar Schema = mongoose.Schema;\n\n\nvar userSchema = Schema({\n   name: String,\n   createdAt  : { type : Date, default : Date.now },   \n});\n\nmongoose.model('User',userSchema);"]],"start1":0,"start2":0,"length1":0,"length2":206}]],"length":206,"saved":false}
+{"ts":1370829149506,"patch":[[{"diffs":[[0,"te.now }"],[-1,","],[0,"   \n});\n"]],"start1":154,"start2":154,"length1":17,"length2":16}]],"length":205,"saved":false}
