@@ -41,3 +41,8 @@
 {"ts":1370835249077,"patch":[[{"diffs":[[0,"\n   "],[-1,"knightID    "],[1,"name"],[0," : S"]],"start1":95,"start2":95,"length1":20,"length2":12}]],"length":923,"saved":false}
 {"ts":1370835586394,"patch":[[{"diffs":[[0,"a;\n\n"],[-1,"\nvar knightSchema = Schema({\n   name : String,\n  \n   });\n"],[0,"   \n"]],"start1":63,"start2":63,"length1":65,"length2":8},{"diffs":[[0,");\n\n"],[-1,"mongoose.model('Knight',knightSchema);"],[0,"\nmon"]],"start1":592,"start2":592,"length1":46,"length2":8}]],"length":828,"saved":false}
 {"ts":1370836031377,"patch":[[{"diffs":[[0,": 0},\n  "],[1,"//"],[0," knight "]],"start1":155,"start2":155,"length1":16,"length2":18}]],"length":830,"saved":false}
+{"ts":1370840172118,"patch":[[{"diffs":[[0,": 0},\n  "],[-1,"//"],[0," knight "]],"start1":155,"start2":155,"length1":18,"length2":16}]],"length":828,"saved":false}
+{"ts":1370841629520,"patch":[[{"diffs":[[0,"  knight  : "],[-1,"["],[0,"{ type: Sche"]],"start1":162,"start2":162,"length1":25,"length2":24},{"diffs":[[0,"night' }"],[-1,"]"],[0,"\n   });\n"]],"start1":212,"start2":212,"length1":17,"length2":16}]],"length":826,"saved":false}
+{"ts":1370843698685,"patch":[[{"diffs":[[0,"   knight  :"],[1," String\n   //"],[0," { type: Sch"]],"start1":161,"start2":161,"length1":24,"length2":37}]],"length":839,"saved":false}
+{"ts":1370846473808,"patch":[[{"diffs":[[0,": String"],[1," "],[0,"\n   // {"]],"start1":172,"start2":172,"length1":16,"length2":17}]],"length":840,"saved":false}
+{"ts":1370847784617,"patch":[[{"diffs":[[0,"\n   "],[-1,"knight"],[1,"mob"],[0,"  : "]],"start1":160,"start2":160,"length1":14,"length2":11}]],"length":837,"saved":false}
